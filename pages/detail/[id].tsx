@@ -19,6 +19,8 @@ interface IProps {
 
 const Detail = ({ postDetails }: IProps) => {
   const [post, setPost] = useState(postDetails);
+  const [comment, setComment] = useState('');
+  const [isPostingComment, setIsPostingComment] = useState(false);
   const [playing, setPlaying] = useState(true);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const router = useRouter();
@@ -55,7 +57,22 @@ const Detail = ({ postDetails }: IProps) => {
     }
   };
 
-  const handleDislike = async () => {};
+  const addComment = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (userProfile && comment) {
+      setIsPostingComment(true);
+
+      const { data } = await axios.put(`${BASE_URL}/api/post/${post._id}`, {
+        userId: userProfile._id,
+        comment,
+      });
+
+      setPost({ ...post, comments: data.comments });
+      setComment('');
+      setIsPostingComment(false);
+    }
+  };
 
   return (
     <div className='flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap'>
@@ -139,7 +156,13 @@ const Detail = ({ postDetails }: IProps) => {
               />
             )}
           </div>
-          <Comments />
+          <Comments
+            comment={comment}
+            setComment={setComment}
+            addComment={addComment}
+            comments={post.comments}
+            isPostingComment={isPostingComment}
+          />
         </div>
       </div>
     </div>
