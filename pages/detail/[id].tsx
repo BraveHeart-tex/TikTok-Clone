@@ -76,10 +76,10 @@ const Detail = ({ postDetails }: IProps) => {
 
   return (
     <div className='flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap'>
-      <div className='relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center'>
+      <div className='relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-[#fff3] '>
         <div className='absolute top-6 left-2 lg:left-6 flex gap-6 z-50'>
           <p className='cursor-pointer' onClick={() => router.back()}>
-            <MdOutlineCancel className='text-white text-[35px]' />
+            <MdOutlineCancel className='text-pink-400 text-[35px]' />
           </p>
         </div>
         <div className='relative'>
@@ -95,7 +95,7 @@ const Detail = ({ postDetails }: IProps) => {
           <div className='absolute top-[45%] left-[45%] cursor-pointer'>
             {!playing && (
               <button onClick={onVideoClick}>
-                <BsFillPlayFill className='text-white text-6xl lg:text-8xl' />
+                <BsFillPlayFill className='text-pink-400 text-6xl lg:text-8xl' />
               </button>
             )}
           </div>
@@ -104,11 +104,11 @@ const Detail = ({ postDetails }: IProps) => {
         <div className='absolute bottom-5 lg:bottom-10 right-5 lg:right-10 cursor-pointer'>
           {isVideoMuted ? (
             <button onClick={() => setIsVideoMuted(false)}>
-              <HiVolumeOff className='text-white text-2xl lg:text-4xl' />
+              <HiVolumeOff className='text-pink-400 text-2xl lg:text-4xl' />
             </button>
           ) : (
             <button onClick={() => setIsVideoMuted(true)}>
-              <HiVolumeUp className='text-white text-2xl lg:text-4xl' />
+              <HiVolumeUp className='text-pink-400 text-2xl lg:text-4xl' />
             </button>
           )}
         </div>
@@ -118,7 +118,7 @@ const Detail = ({ postDetails }: IProps) => {
         <div className='lg:mt-20 mt-10'>
           <div className='flex gap-3 p-2 cursor-pointer font-semibold rounded'>
             <div className='ml-4 md:w-20 md:h-20 w-16 h-16'>
-              <Link href={'/'}>
+              <Link href={`/profile/${post.postedBy._id}`}>
                 <>
                   <Image
                     width={62}
@@ -127,12 +127,13 @@ const Detail = ({ postDetails }: IProps) => {
                     src={post.postedBy.image}
                     alt='profile photo'
                     layout='responsive'
+                    onClick={() => router.push(`/profile/${post.postedBy._id}`)}
                   />
                 </>
               </Link>
             </div>
             <div>
-              <Link href={'/'}>
+              <Link href={`/profile/${post.postedBy._id}`}>
                 <div className='mt-3 flex flex-col gap-2'>
                   <p className='flex gap-2 items-center md:text-md font-bold text-primary'>
                     {post.postedBy.userName} {''}
